@@ -235,9 +235,7 @@ def main(infile, reboot, command, shell, mode, query, reset):
         try:
             client.send_buffer(data)
         except PyMobileDevice3Exception as e:
-            if e == 'Unexpected state 5, issuing ABORT':
-                click.echo('ABORT issued')
-                client.send_buffer(data)
+            return -1
         return 0
     elif reboot:
         client.set_autoboot(1)
