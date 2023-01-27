@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pyirecovery"
+version = "0.1.0"
+description = "A CLI wrapper of pymobiledevice3 that interacts with Recovery/DFU Apple devices"
+authors = ["Mini-Exploit <miniexploitttt@gmail.com>"]
+license = "GPL-3.0-only"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pymobiledevice3 = "^1.36.2"
+
+[tool.poetry.scripts]
+pyirecovery = "pyirecovery.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
