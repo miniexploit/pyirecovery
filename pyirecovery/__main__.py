@@ -3,7 +3,7 @@
 
 import click
 from pymobiledevice3 import irecv, irecv_devices
-from pymobiledevice3.exceptions import PyMobileDevice3Exception
+from pymobiledevice3.exceptions import PyMobileDevice3Exception, IRecvNoDeviceConnectedError
 import usb.core, usb.util
 import binascii
 import readline
@@ -225,8 +225,11 @@ def main(infile, reboot, command, shell, mode, query, reset):
 
     client = None
     try:
-        client = irecv.IRecv()
-    except:
+        client = irecv.IRecv(timeout=5)
+    except IRecvNoDeviceConnectedError:
+        click.secho('[ERROR] Unable to connect to device', fg='red')
+        return -1
+    else:
         click.secho('[ERROR] Could not init IRecv client', fg='red')
         return -1
 
