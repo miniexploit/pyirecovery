@@ -119,7 +119,7 @@ def print_device_info(client):
     cprv = client._device_info['CPRV']
     click.echo(f'CPRV: 0x{cprv}')
     click.echo(f'BDID: {hex(client.board_id)}')
-    click.echo(f'CPID: {hex(client.ecid)}')
+    click.echo(f'ECID: {hex(client.ecid)}')
     cpfm = client._device_info['CPFM']
     click.echo(f'CPFM: 0x{cpfm}')
     scep = client._device_info['SCEP']
