@@ -229,8 +229,8 @@ def main(infile, reboot, command, shell, mode, query, reset):
     except IRecvNoDeviceConnectedError:
         click.secho('[ERROR] Unable to connect to device', fg='red')
         return -1
-    else:
-        click.secho('[ERROR] Could not init IRecv client', fg='red')
+    except Exception as e:
+        click.secho(f'[ERROR] Could not init IRecv client {str(e)}', fg='red')
         return -1
 
     if infile:
