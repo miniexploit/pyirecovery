@@ -4,11 +4,11 @@
 import click
 from pymobiledevice3 import irecv, irecv_devices
 from pymobiledevice3.exceptions import PyMobileDevice3Exception, IRecvNoDeviceConnectedError
-import usb.core, usb.util
 import binascii
 import readline
 import os, sys
 from enum import Enum
+from pyirecovery.no_backend_fix import fix
 
 BUFFER_SIZE = 0x1000
 HISTORY_FILE = os.path.expanduser('.pyirecovery_history')
@@ -222,7 +222,6 @@ def print_device_info(client):
 def main(infile, reboot, command, shell, mode, query, reset):
     if len(sys.argv) == 1:
         main(['--help'])
-
     client = None
     try:
         client = irecv.IRecv(timeout=5)
@@ -230,8 +229,10 @@ def main(infile, reboot, command, shell, mode, query, reset):
         click.secho('[ERROR] Unable to connect to device', fg='red')
         return -1
     except Exception as e:
-        click.secho(f'[ERROR] Could not init IRecv client {str(e)}', fg='red')
-        return -1
+        if fix() != 0:
+            click.secho('[WARNING] Failed to fix pymobiledevice3, already fixed?', fg='yellow')
+        click.echo('Fix done, re-run pyirecovery now')
+        return 0
 
     if infile:
         data = infile.read()
