@@ -229,10 +229,13 @@ def main(infile, reboot, command, shell, mode, query, reset):
         click.secho('[ERROR] Unable to connect to device', fg='red')
         return -1
     except Exception as e:
-        if fix() != 0:
-            click.secho('[WARNING] Failed to fix pymobiledevice3, already fixed?', fg='yellow')
-        click.echo('Fix done, re-run pyirecovery now')
-        return 0
+        if 'No backend available' in str(e):
+            if fix() != 0:
+                click.secho('[WARNING] Failed to fix pymobiledevice3, already fixed?', fg='yellow')
+            click.echo('Fix done, re-run pyirecovery now')
+            return 0
+        click.secho(f'[ERROR] Could not init IRecv client: {str(e)}')
+        return -1
 
     if infile:
         data = infile.read()
