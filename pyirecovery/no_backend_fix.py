@@ -35,6 +35,7 @@ def doPatches(filepath, stockString, patchString, stringLine):
         #print("Couldn't find file at {}\nMoving on to next patch...".format(filepath))
         return -1
 
+# thx m1sta
 def _get_backend():  # Attempt to find a libusb 1.0 library to use as pyusb's backend, exit if one isn't found.
     directories = (
         '/usr/local/lib',
